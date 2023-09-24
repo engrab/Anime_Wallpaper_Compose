@@ -11,9 +11,6 @@ object FavouritesAnimations {
             HomeScreen.Wallpapers.route, HomeScreen.Collections.route -> {
                 slideInHorizontally(initialOffsetX = { 1000 })
             }
-            HomeScreen.Setting.route -> {
-                slideInHorizontally(initialOffsetX = { -1000 })
-            }
             else -> {
                 slideInHorizontally()
             }
@@ -25,9 +22,6 @@ object FavouritesAnimations {
         return when (target.destination.route) {
             HomeScreen.Wallpapers.route, HomeScreen.Collections.route -> {
                 slideOutHorizontally(targetOffsetX = { 1000 })
-            }
-            HomeScreen.Setting.route -> {
-                slideOutHorizontally(targetOffsetX = { -1000 })
             }
             else -> {
                 slideOutHorizontally(targetOffsetX = { -1000 })

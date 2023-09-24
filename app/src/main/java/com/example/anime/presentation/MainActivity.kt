@@ -27,11 +27,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             WallpaperXTheme {
-                Surface(modifier = Modifier.fillMaxSize(), color = Color.Black) {
-                    ProvideWindowInsets {
-                        App()
-                    }
-                }
+                App()
             }
         }
     }

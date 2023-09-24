@@ -36,7 +36,6 @@ import com.example.anime.presentation.navigation.HomeScreen
 import com.example.anime.presentation.navigation.RootScreen
 import com.example.anime.presentation.screens.home.Collections
 import com.example.anime.presentation.screens.home.Favourites
-import com.example.anime.presentation.screens.home.Settings
 import com.example.anime.presentation.screens.home.Wallpapers
 import com.example.anime.presentation.screens.search.Search
 import com.example.anime.presentation.screens.setWallpaper.Gallery
@@ -79,8 +78,7 @@ fun App() {
     val screens = listOf(
         HomeScreen.Wallpapers,
         HomeScreen.Collections,
-        HomeScreen.Favourites,
-        HomeScreen.Setting
+        HomeScreen.Favourites
     )
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
@@ -171,9 +169,6 @@ fun App() {
                             )
                         }
 
-                        HomeScreen.Setting -> {
-                            Settings()
-                        }
                     }
                 }
             }

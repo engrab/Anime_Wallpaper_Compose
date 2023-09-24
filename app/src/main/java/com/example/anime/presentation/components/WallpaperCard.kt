@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.annotation.ExperimentalCoilApi
@@ -74,4 +75,21 @@ fun WallpaperCard(
             }
         }
     }
+}
+
+@Preview
+@Composable
+fun WallpaperCardPreview() {
+    WallpaperCard(
+        wallpaper = Wallpaper(
+            id = "",
+            previewUrl = "",
+            smallUrl = "",
+            wallpaperUrl = "",
+            user = "",
+            userImageURL = ""
+        ),
+        isFavourite = true,
+        onLikedClicked = {  },
+        onClick = {  })
 }
