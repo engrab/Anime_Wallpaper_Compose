@@ -11,6 +11,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
+import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,12 +22,10 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.core.content.ContextCompat.startActivity
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.rememberNavController
 import coil.annotation.ExperimentalCoilApi
 import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
@@ -52,7 +51,6 @@ fun SetWallpaper(
     val scope = rememberCoroutineScope()
 
     val viewModel: SetWallpaperViewModel = hiltViewModel()
-    var bottomMenuVisibility by remember { mutableStateOf(true) }
     val isProgressVisible by remember { viewModel.isProgressVisible }
     val isLiked = favourites.any { it.id == wallpaper.id }
 
@@ -94,29 +92,31 @@ fun SetWallpaper(
         } else {
             Image(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .pointerInput(key1 = Unit) {
-                        detectTapGestures {
-                            bottomMenuVisibility = !bottomMenuVisibility
-                        }
-                    },
+                    .fillMaxSize(),
                 painter = painter,
                 contentDescription = "wallpaper",
                 contentScale = ContentScale.Crop
             )
+            if (isProgressVisible) {
+                CircularProgressIndicator(
+                    modifier = Modifier
+                        .size(52.dp)
+                        .align(Alignment.Center),
+                    color = Color.White,
+                    strokeWidth = 2.dp
+                )
+            }
+
             AnimatedVisibility(
                 modifier = Modifier.align(Alignment.BottomCenter),
-                visible = bottomMenuVisibility,
+                visible = true,
                 enter = slideInVertically(initialOffsetY = { height -> height }),
                 exit = slideOutVertically(targetOffsetY = { height -> height })
             ) {
                 BottomMenu(
                     modifier = Modifier,
-                    title = wallpaper.user,
-                    subtitle = "unsplash.com",
                     isLiked = isLiked,
-                    userImageUrl = wallpaper.userImageURL,
-                    onFabClicked = {
+                    onHome = {
                         viewModel.setWallpaper(
                             wallpaper,
                             WallpaperManager.FLAG_SYSTEM
@@ -153,8 +153,7 @@ fun SetWallpaper(
                             wallpaper,
                             WallpaperManager.FLAG_LOCK
                         )
-                    },
-                    isProgressVisible = isProgressVisible
+                    }
                 )
             }
         }

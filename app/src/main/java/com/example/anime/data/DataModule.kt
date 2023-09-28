@@ -3,6 +3,7 @@ package com.example.anime.data
 import android.app.Application
 import com.example.anime.BuildConfig
 import com.example.anime.data.local.LocalDatabase
+import com.example.anime.data.local.favourites.FavouriteDao
 import com.example.anime.data.remote.unsplash.UnsplashApi
 import com.google.gson.GsonBuilder
 import dagger.Module
@@ -21,8 +22,8 @@ import javax.inject.Singleton
 object DataModule {
     @Provides
     @Singleton
-    fun provideFavouritesDao(application: Application) =
-        LocalDatabase.getNoteDatabase(application).getFavouriteDao()
+    fun provideFavouritesDao(application: Application): FavouriteDao =
+        LocalDatabase.getWallpaperDatabase(application).getFavouriteDao()
 
     @Provides
     @Singleton

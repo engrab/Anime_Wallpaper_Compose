@@ -2,6 +2,9 @@ package com.example.anime.presentation.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.text.BasicTextField
@@ -19,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.ImeAction
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -62,4 +66,14 @@ fun SearchBar(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun SearchBarPreview() {
+    SearchBar(
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.8f),
+        onSearch = {})
 }

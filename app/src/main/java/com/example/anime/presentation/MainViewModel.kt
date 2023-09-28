@@ -24,6 +24,10 @@ constructor(
     private val wallpaperUseCase: WallpaperUseCase
 ) : ViewModel() {
 
+    companion object {
+        const val TAG = "MainActivityViewModel"
+    }
+
     private var favJob: Job? = null
     private var wallJob: Job? = null
     private var collJob: Job? = null
@@ -60,28 +64,32 @@ constructor(
         }
     }
 
-    private fun loadFavourites() = kotlin.runCatching {
-        favJob?.cancel()
-        favJob = wallpaperUseCase.getFavourites()
-            .onEach { favourites.value = it }
-            .launchIn(viewModelScope)
-    }.getOrElse {
-        Log.e(TAG, "loadFavourites: ${it.message}")
+    private fun loadFavourites() {
+        kotlin.runCatching {
+            favJob?.cancel()
+            favJob = wallpaperUseCase.getFavourites()
+                .onEach { favourites.value = it }
+                .launchIn(viewModelScope)
+        }.getOrElse {
+            Log.e(TAG, "loadFavourites: ${it.message}")
+        }
     }
 
-    fun addFavourite(wallpaper: Wallpaper) = kotlin.runCatching {
-        viewModelScope.launch { wallpaperUseCase.addFavourite(wallpaper) }
-    }.getOrElse {
-        Log.e(TAG, "loadFavourites: ${it.message}")
+    fun addFavourite(wallpaper: Wallpaper) {
+        kotlin.runCatching {
+            viewModelScope.launch { wallpaperUseCase.addFavourite(wallpaper) }
+        }.getOrElse {
+            Log.e(TAG, "loadFavourites: ${it.message}")
+        }
     }
 
-    fun removeFavourite(id: String) = kotlin.runCatching {
-        viewModelScope.launch { wallpaperUseCase.removeFavourite(id) }
-    }.getOrElse {
-        Log.e(TAG, "loadFavourites: ${it.message}")
+    fun removeFavourite(id: String) {
+        kotlin.runCatching {
+            viewModelScope.launch { wallpaperUseCase.removeFavourite(id) }
+        }.getOrElse {
+            Log.e(TAG, "loadFavourites: ${it.message}")
+        }
     }
 
-    companion object {
-        const val TAG = "MainActivityViewModel"
-    }
+
 }

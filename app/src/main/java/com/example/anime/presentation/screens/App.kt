@@ -83,8 +83,7 @@ fun App() {
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
 
-    val launcher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
+    val launcher = rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
             val data = Uri.encode(uri.toString())
             navController.navigate(RootScreen.Gallery.route.plus("/$data"))
         }

@@ -14,7 +14,7 @@ abstract class LocalDatabase : RoomDatabase() {
 
     companion object {
         private var INSTANCE: LocalDatabase? = null
-        fun getNoteDatabase(context: Context): LocalDatabase {
+        fun getWallpaperDatabase(context: Context): LocalDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext,

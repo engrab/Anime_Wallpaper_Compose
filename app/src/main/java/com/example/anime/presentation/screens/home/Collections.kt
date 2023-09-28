@@ -54,7 +54,8 @@ fun Collections(
                             .height(180.dp)
                             .padding(horizontal = 16.dp, vertical = 8.dp),
                         title = collection.title,
-                        backgroundImage = collection.coverPhoto
+                        backgroundImage = collection.coverPhoto,
+                        totalPhoto = collection.totalPhotos
                     ) {
                         navController.navigate(RootScreen.CollectionWallpaper.route.plus("/${it.id}/${it.title}"))
                     }

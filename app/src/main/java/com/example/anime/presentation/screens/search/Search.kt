@@ -49,9 +49,6 @@ fun Search(
                         .padding(8.dp)
                 ) {
                     BackButton(navController = navController)
-//                    IconButton(onClick = { navController.popBackStack() }) {
-//                        Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "back")
-//                    }
                     SearchBar(
                         modifier = Modifier
                             .weight(1f)

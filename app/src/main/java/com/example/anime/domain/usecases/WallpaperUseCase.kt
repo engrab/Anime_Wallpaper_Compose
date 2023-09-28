@@ -14,6 +14,7 @@ import javax.inject.Inject
 data class WallpaperUseCase
 @Inject
 constructor(
+    // remote from unsplash
     val getWallpapers: GetWallpapers,
     val getWallpaper: GetWallpaper,
     val getCollections: GetCollections,
@@ -22,6 +23,7 @@ constructor(
     val downloadWallpaper: DownloadWallpaper,
     val setWallpaperUseCases: SetWallpaperUseCases,
 
+    // local database
     val getFavourites: GetFavourites,
     val addFavourite: AddFavourite,
     val removeFavourite: RemoveFavourite
