@@ -77,6 +77,7 @@ fun WallpaperCard(
     }
 }
 
+@OptIn(ExperimentalCoilApi::class)
 @Preview
 @Composable
 fun WallpaperCardPreview() {

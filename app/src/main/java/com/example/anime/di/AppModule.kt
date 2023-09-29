@@ -1,10 +1,15 @@
-package com.example.anime.data
+package com.example.anime.di
 
 import android.app.Application
 import com.example.anime.BuildConfig
 import com.example.anime.data.local.LocalDatabase
+import com.example.anime.data.local.LocalRepository
 import com.example.anime.data.local.favourites.FavouriteDao
+import com.example.anime.data.remote.RemoteRepository
 import com.example.anime.data.remote.unsplash.UnsplashApi
+import com.example.anime.data.remote.unsplash.UnsplashRepository
+import com.example.anime.domain.repository.WallpaperRepository
+import com.example.anime.domain.repository.WallpaperRepositoryImpl
 import com.google.gson.GsonBuilder
 import dagger.Module
 import dagger.Provides
@@ -13,13 +18,38 @@ import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import javax.inject.Named
 import javax.inject.Singleton
 
-/* This class can be moved to data, but will increase dependency in that module  */
 
-@InstallIn(SingletonComponent::class)
 @Module
-object DataModule {
+@InstallIn(SingletonComponent::class)
+object AppModule {
+
+    @Provides
+    @Singleton
+    @Named("unsplash")
+    fun provideUnsplashRepository(
+        unsplashApi: UnsplashApi
+    ): RemoteRepository =
+        UnsplashRepository(unsplashApi)
+
+    @Provides
+    @Singleton
+    fun provideLocalRepository(
+        context: Application,
+        favouriteDao: FavouriteDao
+    ): LocalRepository = LocalRepository(context, favouriteDao)
+
+    @Provides
+    @Singleton
+    fun provideWallpaperRepository(
+        @Named("unsplash") remoteRepository: RemoteRepository,
+        localRepository: LocalRepository
+    ): WallpaperRepository =
+        WallpaperRepositoryImpl(remoteRepository, localRepository)
+
+
     @Provides
     @Singleton
     fun provideFavouritesDao(application: Application): FavouriteDao =
