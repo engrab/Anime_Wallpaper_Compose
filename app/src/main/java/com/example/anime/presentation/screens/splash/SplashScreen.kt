@@ -19,7 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.anime.R
-import com.example.anime.presentation.navigation.RootScreen
+import com.example.anime.presentation.navigation.MainScreenRoute
 import kotlinx.coroutines.delay
 
 @Composable
@@ -40,8 +40,8 @@ fun SplashScreen(
             )
         )
         delay(1000)
-        navController.navigate(RootScreen.Home.route) {
-            popUpTo(RootScreen.Splash.route) { inclusive = true }
+        navController.navigate(MainScreenRoute.Home.route) {
+            popUpTo(MainScreenRoute.Splash.route) { inclusive = true }
         }
     }
 

@@ -57,7 +57,6 @@ android {
 }
 
 dependencies {
-
     // core dependencies
     implementation 'androidx.core:core-ktx:1.9.0'
     implementation 'androidx.appcompat:appcompat:1.5.1'
@@ -115,4 +114,8 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.3"
     // Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:2.4.3"
+
+    // admob ads sdk
+    implementation 'com.google.android.gms:play-services-ads:22.0.0'
+
 }

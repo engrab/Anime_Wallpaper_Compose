@@ -26,7 +26,7 @@ private val LightColorPalette = lightColors(
 )
 
 @Composable
-fun WallpaperXTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
+fun AnimeWallpaperTheme(darkTheme: Boolean = isSystemInDarkTheme(), content: @Composable () -> Unit) {
     val colors = if (darkTheme) {
         DarkColorPalette
     } else {

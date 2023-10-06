@@ -6,12 +6,12 @@ import androidx.compose.ui.Alignment
 
 object SetWallpaperAnimations {
     @ExperimentalAnimationApi
-    fun enterTransition(): EnterTransition {
+    fun enterAnimation(): EnterTransition {
         return expandIn(expandFrom = Alignment.Center, animationSpec = tween(durationMillis = 1000))
     }
 
     @ExperimentalAnimationApi
-    fun exitTransition(): ExitTransition {
+    fun exitAnimation(): ExitTransition {
         return shrinkOut(shrinkTowards = Alignment.Center, animationSpec = tween(durationMillis = 1000))
     }
 }

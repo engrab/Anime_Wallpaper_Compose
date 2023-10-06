@@ -6,7 +6,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
-import com.example.anime.data.model.Collection
+import com.example.anime.data.model.Category
 import com.example.anime.data.model.Wallpaper
 import com.example.anime.domain.usecases.WallpaperUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -32,7 +32,7 @@ constructor(
     private var wallJob: Job? = null
     private var collJob: Job? = null
     var wallpapers = flowOf<PagingData<Wallpaper>>()
-    var collections = flowOf<PagingData<Collection>>()
+    var collections = flowOf<PagingData<Category>>()
     val favourites: MutableState<List<Wallpaper>> = mutableStateOf(listOf())
 
     init {

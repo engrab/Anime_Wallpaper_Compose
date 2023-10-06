@@ -2,9 +2,9 @@ package com.example.anime.domain.repository
 
 import android.graphics.Bitmap
 import android.net.Uri
-import com.example.anime.data.local.LocalRepository
-import com.example.anime.data.local.favourites.FavouriteEntity
-import com.example.anime.data.model.Collection
+import com.example.anime.data.database.LocalRepository
+import com.example.anime.data.database.favourites.FavouriteEntity
+import com.example.anime.data.model.Category
 import com.example.anime.data.model.Wallpaper
 import com.example.anime.data.remote.RemoteRepository
 import kotlinx.coroutines.flow.Flow
@@ -26,7 +26,7 @@ constructor(
     override suspend fun getWallpaper(id: String) =
         remoteRepository.getWallpaper(id)
 
-    override suspend fun getCollections(page: Int): List<Collection> =
+    override suspend fun getCollections(page: Int): List<Category> =
         remoteRepository.getCollections(page)
 
     override suspend fun getWallpapersByCollection(

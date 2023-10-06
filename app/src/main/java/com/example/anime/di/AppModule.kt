@@ -2,12 +2,12 @@ package com.example.anime.di
 
 import android.app.Application
 import com.example.anime.BuildConfig
-import com.example.anime.data.local.LocalDatabase
-import com.example.anime.data.local.LocalRepository
-import com.example.anime.data.local.favourites.FavouriteDao
+import com.example.anime.data.database.LocalDatabase
+import com.example.anime.data.database.LocalRepository
+import com.example.anime.data.database.favourites.FavouriteDao
 import com.example.anime.data.remote.RemoteRepository
 import com.example.anime.data.remote.unsplash.UnsplashApi
-import com.example.anime.data.remote.unsplash.UnsplashRepository
+import com.example.anime.data.remote.unsplash.UnsplashRepositoryImpl
 import com.example.anime.domain.repository.WallpaperRepository
 import com.example.anime.domain.repository.WallpaperRepositoryImpl
 import com.google.gson.GsonBuilder
@@ -32,7 +32,7 @@ object AppModule {
     fun provideUnsplashRepository(
         unsplashApi: UnsplashApi
     ): RemoteRepository =
-        UnsplashRepository(unsplashApi)
+        UnsplashRepositoryImpl(unsplashApi)
 
     @Provides
     @Singleton

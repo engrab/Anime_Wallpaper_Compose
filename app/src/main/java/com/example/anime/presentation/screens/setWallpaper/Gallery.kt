@@ -31,7 +31,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.anime.presentation.components.BackButton
+import com.example.anime.presentation.components.BackIcon
 
 
 @Composable
@@ -109,7 +109,7 @@ fun Gallery(
                     Text(text = "Set Wallpaper")
                 }
             }
-            BackButton(
+            BackIcon(
                 modifier = Modifier
                     .align(Alignment.TopStart)
                     .padding(start = 16.dp, top = 16.dp),
@@ -117,4 +117,10 @@ fun Gallery(
             )
         }
     }
+}
+
+@Preview
+@Composable
+fun GalleryPreview() {
+    Gallery(imageUri = Uri.EMPTY, navController = rememberNavController())
 }

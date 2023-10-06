@@ -8,16 +8,13 @@ import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
@@ -31,8 +28,8 @@ import coil.compose.ImagePainter
 import coil.compose.rememberImagePainter
 import coil.transform.BlurTransformation
 import com.example.anime.data.model.Wallpaper
-import com.example.anime.presentation.components.BackButton
-import com.example.anime.presentation.screens.setWallpaper.components.BottomMenu
+import com.example.anime.presentation.components.BackIcon
+import com.example.anime.presentation.components.BottomMenu
 import kotlinx.coroutines.launch
 
 private const val TAG = "SetWallpaper"
@@ -157,7 +154,7 @@ fun SetWallpaper(
                 )
             }
         }
-        BackButton(
+        BackIcon(
             modifier = Modifier
                 .align(Alignment.TopStart)
                 .padding(start = 16.dp, top = 16.dp),
