@@ -19,6 +19,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.example.anime.R
+import com.example.anime.presentation.navigation.HomeScreenRoute
 import com.example.anime.presentation.navigation.MainScreenRoute
 import kotlinx.coroutines.delay
 
@@ -40,7 +41,7 @@ fun SplashScreen(
             )
         )
         delay(1000)
-        navController.navigate(MainScreenRoute.Home.route) {
+        navController.navigate(HomeScreenRoute.Wallpapers.route) {
             popUpTo(MainScreenRoute.Splash.route) { inclusive = true }
         }
     }

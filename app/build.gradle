@@ -117,5 +117,6 @@ dependencies {
 
     // admob ads sdk
     implementation 'com.google.android.gms:play-services-ads:22.0.0'
+    implementation 'com.anjlab.android.iab.v3:library:2.0.3'
 
 }
