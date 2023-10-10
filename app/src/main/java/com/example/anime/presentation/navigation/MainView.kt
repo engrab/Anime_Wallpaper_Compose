@@ -1,17 +1,18 @@
 package com.example.anime.presentation.navigation
 
+import com.example.anime.R
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
+import androidx.activity.compose.BackHandler
 import androidx.compose.animation.*
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.grid.rememberLazyGridState
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material.*
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.PrivacyTip
 import androidx.compose.material.icons.filled.Share
@@ -24,6 +25,8 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavDestination
@@ -54,11 +57,8 @@ import com.example.anime.presentation.screens.setWallpaper.Gallery
 import com.example.anime.presentation.screens.setWallpaper.SetWallpaper
 import com.example.anime.presentation.screens.splash.SplashScreen
 import com.example.anime.presentation.screens.wallpaperList.CategoryWallpapers
-//import com.google.accompanist.navigation.animation.AnimatedNavHost
-//import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.google.gson.Gson
 import kotlinx.coroutines.launch
@@ -70,7 +70,7 @@ import kotlinx.coroutines.launch
 @ExperimentalFoundationApi
 @ExperimentalAnimationApi
 @Composable
-fun App(
+fun MainView(
     context: Activity,
     showAds: () -> Unit
 ) {
@@ -88,40 +88,20 @@ fun App(
     val wallpaperListState = rememberLazyGridState()
     val favouriteListState = rememberLazyGridState()
     val collectionListState = rememberLazyListState()
-    val pagerState = rememberPagerState()
-    val screens = listOf(
-        HomeScreenRoute.Wallpapers,
-        HomeScreenRoute.Collections,
-        HomeScreenRoute.Favourites,
-        HomeScreenRoute.Saved
-    )
     val showTopBar = remember {
         mutableStateOf(true)
     }
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
-    val currentRoute = navBackStackEntry?.destination?.route
 
-    val launcher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.GetContent()) { uri: Uri? ->
-            val data = Uri.encode(uri.toString())
-            navController.navigate(MainScreenRoute.Gallery.route.plus("/$data"))
-        }
 
     val scaffoldState = rememberScaffoldState()
     val scope = rememberCoroutineScope()
+
+
 
     Scaffold(
         scaffoldState = scaffoldState,
         modifier = Modifier.fillMaxSize(),
         topBar = {
-//            AnimatedVisibility(
-//                visible = currentRoute == MainScreenRoute.Home.route
-//            ) {
-
-//                Row(
-//                    Modifier
-//                        .fillMaxWidth()
-//                        .height(56.dp)) {
 
             if (showTopBar.value){
                 AppBar(
@@ -135,39 +115,15 @@ fun App(
             }
 
 
-//                    Row(
-//                        Modifier
-//                            .fillMaxWidth()
-//                            .height(56.dp),
-//                        horizontalArrangement = Arrangement.SpaceBetween,
-//                        verticalAlignment = Alignment.CenterVertically
-//                    ) {
-//
-//                        Icon(
-//                            modifier = Modifier
-//                                .padding(start = 16.dp, top = 16.dp, bottom = 8.dp),
-//                            painter = painterResource(id = screens[pagerState.currentPage].resId),
-//                            contentDescription = "collections"
-//                        )
-//                        HorizontalPagerIndicator(
-//                            pagerState = pagerState,
-//                            modifier = Modifier.padding(16.dp)
-//                        )
-//                        IconButton(onClick = {
-//                            navController.navigate(MainScreenRoute.Search.route)
-//                        }) {
-//                            Icon(
-//                                imageVector = Icons.Rounded.Search,
-//                                contentDescription = "Search"
-//                            )
-//                        }
-//                    }
-//                }
-//            }
         },
 
         drawerGesturesEnabled = scaffoldState.drawerState.isOpen,
         drawerContent = {
+            BackHandler(enabled = scaffoldState.drawerState.isOpen) {
+                scope.launch {
+                    scaffoldState.drawerState.close()
+                }
+            }
             DrawerHeader()
             Divider(
                 modifier = Modifier
@@ -200,10 +156,10 @@ fun App(
                         "share" -> {
                             val sendIntent: Intent = Intent().apply {
                                 action = Intent.ACTION_SEND
-                                putExtra(Intent.EXTRA_SUBJECT, "Wallpaper")
+                                putExtra(Intent.EXTRA_SUBJECT, "Wallpaper App")
                                 putExtra(
                                     Intent.EXTRA_TEXT,
-                                    "Download Wallpaper App and make your phone more attractive \n https://play.google.com/store/apps/details?id=${context.packageName}"
+                                    "Download Wallpaper App and make your phone more attractive. \n https://play.google.com/store/apps/details?id=${context.packageName}"
                                 )
                                 type = "text/plain"
                             }
@@ -274,111 +230,12 @@ fun App(
                     navController = navController
                 )
             }
-
-//            composable(HomeScreenRoute.Saved.route) {
-//                ShowImages(navHostController = navController)
-//            }
-
-//            composable(route = MainScreenRoute.Home.route) {
-//                HorizontalPager(count = screens.size, state = pagerState) { page ->
-//                    when (screens[page]) {
-//                        HomeScreenRoute.Wallpapers -> {
-//                            WallpaperScreen(
-//                                viewModel = mainViewModel,
-//                                wallpapers = wallpapers,
-//                                favourites = favourites,
-//                                listState = wallpaperListState,
-//                                navController = navController
-//                            )
-//                        }
-//                        HomeScreenRoute.Collections -> {
-//                            CategoryScreen(
-//                                collections = collections,
-//                                listState = collectionListState,
-//                                navController = navController
-//                            )
-//                        }
-//                        HomeScreenRoute.Favourites -> {
-//                            FavouriteScreen(
-//                                viewModel = mainViewModel,
-//                                favourites = favourites,
-//                                listState = favouriteListState,
-//                                navController = navController
-//                            )
-//                        }
-//                        HomeScreenRoute.Saved -> {
-//                            ShowImages(navHostController = navController)
-//                        }
-//
-//                    }
-//                }
-//            }
-//            composable(
-//                route = MainScreenRoute.Search.route,
-////                enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) },
-////                exitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) }
-//            ) {
-//                SearchScreen(
-//                    navController = navController,
-//                    favourites = favourites,
-//                    addFavourite = { mainViewModel.addFavourite(it) },
-//                    removeFavourite = { mainViewModel.removeFavourite(it) }
-//                )
-//            }
-//            composable(
-//                route = MainScreenRoute.Gallery.route.plus("/{imageUri}"),
-////                enterTransition = { FavouritesAnimations.enterAnimation(this.initialState) },
-////                exitTransition = { FavouritesAnimations.exitAnimation(this.targetState) },
-//                arguments = listOf(navArgument("imageUri") { type = NavType.StringType })
-//            ) { backStack ->
-//                backStack.arguments?.getString("imageUri")?.let { u ->
-//                    val uri = Uri.parse(u)
-//                    Gallery(uri, navController)
-//                }
-//            }
-//            composable(
-//                route = MainScreenRoute.SetWallpaper.route.plus("/{wallpaper}"),
-////                enterTransition = { SetWallpaperAnimations.enterAnimation() },
-////                exitTransition = { SetWallpaperAnimations.exitAnimation() },
-//                arguments = listOf(navArgument("wallpaper") { type = NavType.StringType })
-//            ) { backStack ->
-//                backStack.arguments?.getString("wallpaper")?.let { w ->
-//                    val wallpaper = Gson().fromJson(w, Wallpaper::class.java)
-//                    SetWallpaper(
-//                        navController = navController,
-//                        wallpaper = wallpaper,
-//                        favourites = favourites,
-//                        addFavourite = { mainViewModel.addFavourite(it) },
-//                        removeFavourite = { mainViewModel.removeFavourite(it) },
-//                        showAds = { showAds() }
-//                    )
-//                }
-//            }
-//            composable(
-//                route = MainScreenRoute.CategoryWallpaper.route.plus("/{collectionId}/{title}"),
-////                enterTransition = { expandIn() },
-////                exitTransition = { shrinkOut() },
-//                arguments = listOf(
-//                    navArgument("collectionId") { type = NavType.StringType },
-//                    navArgument("title") { type = NavType.StringType }
-//                )
-//            ) { backStack ->
-//                backStack.arguments?.getString("collectionId")?.let { id ->
-//                    val title = backStack.arguments?.getString("title")
-//                    CategoryWallpapers(
-//                        collectionId = id,
-//                        collectionName = title ?: "",
-//                        favourites = favourites,
-//                        addFavourite = { mainViewModel.addFavourite(it) },
-//                        removeFavourite = { mainViewModel.removeFavourite(it) },
-//                        navController = navController
-//                    )
-//                }
-//            }
             detailsNavGraph(navController = navController, favourites= favourites, mainViewModel = mainViewModel, showAds = {showAds()})
         }
+
     }
 }
+
 @OptIn(ExperimentalFoundationApi::class, ExperimentalAnimationApi::class,
     ExperimentalCoilApi::class
 )
@@ -393,8 +250,6 @@ fun NavGraphBuilder.detailsNavGraph(
     ) {
         composable(
             route = MainScreenRoute.Search.route,
-//                enterTransition = { slideInHorizontally(initialOffsetX = { 1000 }) },
-//                exitTransition = { slideOutHorizontally(targetOffsetX = { 1000 }) }
         ) {
             SearchScreen(
                 navController = navController,
@@ -405,8 +260,6 @@ fun NavGraphBuilder.detailsNavGraph(
         }
         composable(
             route = MainScreenRoute.Gallery.route.plus("/{imageUri}"),
-//                enterTransition = { FavouritesAnimations.enterAnimation(this.initialState) },
-//                exitTransition = { FavouritesAnimations.exitAnimation(this.targetState) },
             arguments = listOf(navArgument("imageUri") { type = NavType.StringType })
         ) { backStack ->
             backStack.arguments?.getString("imageUri")?.let { u ->
@@ -416,8 +269,6 @@ fun NavGraphBuilder.detailsNavGraph(
         }
         composable(
             route = MainScreenRoute.SetWallpaper.route.plus("/{wallpaper}"),
-//                enterTransition = { SetWallpaperAnimations.enterAnimation() },
-//                exitTransition = { SetWallpaperAnimations.exitAnimation() },
             arguments = listOf(navArgument("wallpaper") { type = NavType.StringType })
         ) { backStack ->
             backStack.arguments?.getString("wallpaper")?.let { w ->
@@ -434,8 +285,7 @@ fun NavGraphBuilder.detailsNavGraph(
         }
         composable(
             route = MainScreenRoute.CategoryWallpaper.route.plus("/{collectionId}/{title}"),
-//                enterTransition = { expandIn() },
-//                exitTransition = { shrinkOut() },
+
             arguments = listOf(
                 navArgument("collectionId") { type = NavType.StringType },
                 navArgument("title") { type = NavType.StringType }

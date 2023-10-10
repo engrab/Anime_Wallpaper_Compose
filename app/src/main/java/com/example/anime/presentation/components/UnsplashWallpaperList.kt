@@ -73,7 +73,7 @@ fun WallpaperList(
                             .padding(top = if (index == 0 || index == 1) 8.dp else 0.dp)
                             .padding(8.dp)
                             .fillMaxWidth()
-                            .height(246.dp),
+                            .height(250.dp),
                         wallpaper = wallpaper,
                         onClick = {
                             val data = Uri.encode(Gson().toJson(wallpaper))

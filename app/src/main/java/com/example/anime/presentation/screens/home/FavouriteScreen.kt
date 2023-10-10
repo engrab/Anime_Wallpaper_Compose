@@ -46,7 +46,7 @@ fun FavouriteScreen(
                         .padding(top = if (index == 0 || index == 1) 8.dp else 0.dp)
                         .padding(4.dp)
                         .fillMaxWidth()
-                        .height(246.dp),
+                        .height(250.dp),
                     wallpaper = wallpaper,
                     isFavourite = true,
                     onLikedClicked = {

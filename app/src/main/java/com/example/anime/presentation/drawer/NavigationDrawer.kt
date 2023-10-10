@@ -1,10 +1,10 @@
 package com.example.anime.presentation.drawer
 
+import com.example.anime.R
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -14,7 +14,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
 @Composable
 fun DrawerHeader() {
     Box(
@@ -23,7 +22,7 @@ fun DrawerHeader() {
             .padding(vertical = 64.dp),
         contentAlignment = Alignment.Center
     ) {
-        Text(text = "Wallpaper", fontSize = 60.sp)
+        Text(text = stringResource(id = R.string.app_name), fontSize = 60.sp)
 
     }
 }
