@@ -1,20 +1,11 @@
 package com.example.anime.presentation.drawer
 
-
-import android.app.Activity
 import androidx.compose.material.*
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
-import androidx.compose.material.icons.rounded.AccountBalanceWallet
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingClientStateListener
-import com.android.billingclient.api.BillingFlowParams
-import com.android.billingclient.api.BillingResult
-import com.android.billingclient.api.PurchasesUpdatedListener
-import com.android.billingclient.api.SkuDetailsParams
 import com.example.anime.presentation.navigation.MainScreenRoute
 
 @Composable
@@ -45,14 +36,14 @@ fun AppBar(navController : NavHostController,
                     contentDescription = "Search"
                 )
             }
-            IconButton(onClick = {
-
-            }) {
-                Icon(
-                    imageVector = Icons.Rounded.AccountBalanceWallet,
-                    contentDescription = "Remove Ads"
-                )
-            }
+//            IconButton(onClick = {
+//
+//            }) {
+//                Icon(
+//                    imageVector = Icons.Rounded.AccountBalanceWallet,
+//                    contentDescription = "Remove Ads"
+//                )
+//            }
 
         }
 

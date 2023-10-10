@@ -21,7 +21,7 @@ fun BottomMenu(
     onDownload: () -> Unit,
     onLock: () -> Unit,
     onShare: () -> Unit,
-    onFavourite: () -> Unit
+    onFavourite: () -> Unit,
 ) {
     Card(
         modifier = modifier

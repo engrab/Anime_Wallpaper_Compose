@@ -42,7 +42,8 @@ fun SetWallpaper(
     wallpaper: Wallpaper,
     favourites: List<Wallpaper>,
     addFavourite: (Wallpaper) -> Unit,
-    removeFavourite: (String) -> Unit
+    removeFavourite: (String) -> Unit,
+    showAds: () -> Unit
 ) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
@@ -121,6 +122,7 @@ fun SetWallpaper(
                     },
                     onDownload = {
                         viewModel.downloadWallpaper(wallpaper)
+                        showAds()
                     },
                     onFavourite = {
                         if (isLiked) {
