@@ -307,7 +307,7 @@ fun NavGraphBuilder.detailsNavGraph(
 }
 
 @Composable
-fun BottomBar(navController: NavHostController, hideTopBar: MutableState<Boolean>) {
+fun BottomBar(navController: NavHostController, showTopBar: MutableState<Boolean>) {
     val screens = listOf(
         BottomScreenRoute.Wallpapers,
         BottomScreenRoute.Collections,
@@ -318,7 +318,7 @@ fun BottomBar(navController: NavHostController, hideTopBar: MutableState<Boolean
 
     val bottomBarDestination = screens.any { it.route == currentDestination?.route }
     if (bottomBarDestination) {
-        hideTopBar.value = true
+        showTopBar.value = true
         BottomNavigation {
             screens.forEach { screen ->
                 AddItem(
@@ -329,7 +329,7 @@ fun BottomBar(navController: NavHostController, hideTopBar: MutableState<Boolean
             }
         }
     }else{
-        hideTopBar.value = false
+        showTopBar.value = false
     }
 }
 

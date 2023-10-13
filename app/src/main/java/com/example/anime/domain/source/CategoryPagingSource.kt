@@ -5,6 +5,8 @@ import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.anime.data.model.Category
 import com.example.anime.domain.repository.WallpaperRepository
+import retrofit2.HttpException
+import java.io.IOException
 
 class CategoryPagingSource(
     private val repository: WallpaperRepository
@@ -14,8 +16,22 @@ class CategoryPagingSource(
         const val TAG = "CollectionSource"
     }
 
+//    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Category> {
+//        return kotlin.runCatching {
+//            val nextPage = params.key ?: 1
+//            val collections = repository.getCollections(nextPage)
+//            LoadResult.Page(
+//                data = collections,
+//                prevKey = if (nextPage == 1) null else nextPage - 1,
+//                nextKey = nextPage.plus(1)
+//            )
+//        }.getOrElse {
+//            Log.e(TAG, "load: ${it.message}")
+//            LoadResult.Error(it)
+//        }
+//    }
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Category> {
-        return kotlin.runCatching {
+        return try{
             val nextPage = params.key ?: 1
             val collections = repository.getCollections(nextPage)
             LoadResult.Page(
@@ -23,9 +39,10 @@ class CategoryPagingSource(
                 prevKey = if (nextPage == 1) null else nextPage - 1,
                 nextKey = nextPage.plus(1)
             )
-        }.getOrElse {
-            Log.e(TAG, "load: ${it.message}")
-            LoadResult.Error(it)
+        }catch (exception: IOException) {
+            LoadResult.Error(exception)
+        } catch (exception: HttpException) {
+            LoadResult.Error(exception)
         }
     }
 
